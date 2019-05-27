@@ -11,9 +11,9 @@ public class Fighting {
 	private int enemyDamage = 25;
 	private Scanner in;
 	public Fighting(boolean w,boolean f, String enemy) {
-		if(w) { damage = 50; }
-		else if (f) { damage = 40; }
-		else {damage = 35;}
+		if(w) { damage = 40; }
+		else if (f) { damage = 20; }
+		else {damage = 15;}
 		in = new Scanner(System.in);
 		attacked(enemy);
 	}
@@ -44,11 +44,11 @@ public class Fighting {
 			if (!runAway && enemyHealth > 0 && yourHealth > 0) {
 				double run = Math.random();
 				if(run<0.51) {
-					System.out.println(enemy + " attacks you for 25 damage" + "\nResponse A) Attack\nResponse B) Block\nResponse C) Run Away");
+					System.out.println(enemy + "They step right infront of you and attacks you" + "\nResponse A) Attack\nResponse B) Block\nResponse C) Run Away");
 					yourHealth -= 25;
 				}else {
 					System.out.println(enemy + " attacks you but misses" + "\nResponse A) Attack\nResponse B) Block\nResponse C) Run Away");
-
+				
 				}
 			}
 		}
