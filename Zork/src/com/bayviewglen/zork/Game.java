@@ -89,15 +89,34 @@ class Game
      * Create the game and initialise its internal map.
      */
     public Game() {
-        try {
-			initRooms("data/Rooms.dat");
-			currentRoom = masterRoomMap.get("ROOM_1");
+     //   try {
+        /*	
+    	Guards g = new Guards(1); // guard 1,2,3,4 dialouge, checking if the guards will attack you
+        	boolean isAttacked = g.start(1);
+        	Fighting f = new Fighting(false, true, "Guards", isAttacked); 
+        	g = new Guards(2);
+        	isAttacked = g.start(2);
+        	Fighting i = new Fighting (false, true, "Guards", isAttacked);
+        	g = new Guards (3);
+        	isAttacked = g.start(3);
+        	Fighting j = new Fighting (false, true, "Guards", isAttacked);
+        	g = new Guards (4);
+        	isAttacked = g.start(4);
+        	Fighting w = new Fighting (false, true, "Guards", isAttacked);}
+        	*/
+    	
+    	Fighting v = new Fighting(false, true, "Vampire", true);
+    }
+			//initRooms("data/Rooms.dat");
+			//currentRoom = masterRoomMap.get("ROOM_1");
+        	/*
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         parser = new Parser();
     }
+    */
 /**
      *  Main play routine.  Loops until end of play.
      */
@@ -107,7 +126,7 @@ class Game
 // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
                 
-        boolean finished = false;
+        boolean finished = true;
         while (! finished)
         {
             Command command = parser.getCommand();
@@ -139,7 +158,7 @@ class Game
             System.out.println("I don't know what you mean...");
             return false;
         }
-String commandWord = command.getCommandWord();
+        String commandWord = command.getCommandWord();
         if (commandWord.equals("help"))
             printHelp();
         else if (commandWord.equals("go"))
