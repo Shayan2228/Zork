@@ -1,0 +1,78 @@
+Room Name: Bedroom
+Room Description:  The darkness is pierced by a bright light overhead.<br>There is a narrow, dark passage to the east leading to another room.
+Exit Rooms: E-Master's Room
+Room Name: Master's Room
+Room Description: You discover that you are indeed in some sort of vampire mansion!? You see pictures on the wall of a vampire with weird stone figures standing around him. You seem to be in his room. This can't be good.  
+Exit Rooms: W-Bedroom,E-Bathroom,S-Music Room
+Room Name: Bathroom
+Room Description: You are now in the bathroom. As normal, there's a sink and a toilet in here. Smells like blood in here.
+Exit Rooms: W-Master's Room
+Room Name: Music Room
+Room Description: This is the music room. There are instruments everywhere including a huge organ on the back wall. 
+Exit Rooms: N-Master's Room, S-Library
+Room Name: Library
+Room Description: Books are lined across the shelves. Weird blood covered books are on the ceiling. 
+Exit Rooms: N-Music Room, E-TV Room
+Room Name:TV Room
+Room Description: There's comfortable couches and a TV in front of them. This gives you a cozy vibe. 
+Exit Rooms: W-Library, S-Armory, E-Private Chamber
+Room Name: Armory
+Room Description: An arsenal of ammunition is here, but its all covered in blood and gross. There is dagger in front of the door.
+Exit Rooms: N-TV Room
+Room Name:Private Chamber
+Room Description: A room with statues of bats and cobweb everywhere. Euuugh, disgusting.
+Exit Rooms: W- TV Room, N- Second Master's Room
+Room Name: Second Master's Room
+Room Description: Another master's room!? Man, whoever the guy in the house is, he's got some mad cash.
+Exit Rooms: S-Private Chamber, N- Study Room, E- Shooting Range
+Room Name: Study Room
+Room Description: The study room has a large oak desk surrounded by old books. Dimly lit.
+Exit Rooms: S-Second Master's Room, W-Bathroom
+Room Name: Shooting Range
+Room Description: A long room with targets at one end and empty racks.
+Exit Rooms: W-Second Master's Room, E-Drawing Room
+Room Name: Drawing Room
+Room Description: A room full of canvases, paint and paintings of a dark figure.
+Exit Rooms: W-Shooting Range, S-Library 2
+Room Name: Library 2
+Room Description: A smaller library is in front of you. Knowledge all around.
+Exit Rooms: N-Drawing Room, S-Tack Room
+Room Name: Tack Room
+Room Description: Saddles and equestrian shoes are on the walls. 
+Exit Rooms: N-Library 2, D-Bed Room 2
+Room Name: Bed Room 2
+Room Description: A child's bedroom. Why is there blood everywhere????
+Exit Rooms: W-Music Room 2, E-Dressing Room, U-Tack Room
+Room Name: Music Room 2
+Room Description: Another music room... Why are there 2 of every room in this house.
+Exit Rooms: E-Bed Room 2
+Room Name: Dressing Room
+Room Description: A lot of clothing, but theres mostly black capes in the closet.
+Exit Rooms: W-Bed Room 2, E-Library 3
+Room Name: Library 3
+Room Description: A third library; Is it a hallucination or are the shelves floating?
+Exit Rooms: W-Dressing Room, N-Wine Cellar
+Room Name: Wine Cellar
+Room Description: A cellar filled racks of wine. Owner must be a big drinker.
+Exit Rooms: E-Family Kitchen, N-Dining Hall, S-Library 3
+Room Name: Dining Hall
+Room Description: A long room with a large table with broken plates and silver wear. 
+Exit Rooms: S-Wine Cellar, N-Giant Living Room
+Room Name: Family Kitchen
+Room Description: A kitchen, stove and sink and hearts in the fridge???
+Exit Rooms: W-Wine Cellar
+Room Name: Giant Living Room
+Room Description: A less cozy spacey room. You can hear something or someone in the distance. 
+Exit Rooms: S-Dining Hall, N-Drawing Room 2
+Room Name: Drawing Room 2
+Room Description: Another drawing room filled with paintings of bats and trees without their leaves.
+Exit Rooms: S-Giant Living Room, E-Living Room
+Room Name: Living Room
+Room Description: Smells like oak and has and old television above a fire place.
+Exit Rooms: W-Drawing Room 2, D-Shoe Room
+Room Name: Shoe Room
+Room Description: Smells like dirty shoes. The exit is near!!
+Exit Rooms: S-Front Porch, U-Living Room
+Room Name: Front Porch
+Room Description: Fresh air! Finally. Wait till the police hear about this. 
+Exit Rooms: N-Shoe Room
