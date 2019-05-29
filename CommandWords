@@ -31,4 +31,3 @@ class CommandWords {
 		}
 		System.out.println();
 	}
-}
