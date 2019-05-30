@@ -1,0 +1,44 @@
+package com.bayviewglen.zork;
+
+import java.util.HashMap;
+
+public class Inventory {
+	private HashMap<String, Item> items;
+
+	public Inventory() {
+		super();
+		items = new HashMap<String, Item>();
+	}
+
+	public boolean hasItem(String itemName) {
+		return items.containsKey(itemName);
+	}
+	
+	public void addToInventory(Item item) {
+		items.put(item.getName().toLowerCase(),item);
+	}
+	
+	public void removeFromInventory(String itemName) {
+		items.remove(itemName);
+	}
+	
+	public HashMap<String, Item> getItems() {
+		return items;
+	}
+
+	public void setItems(HashMap<String, Item> items) {
+		this.items = items;
+	}
+	
+	public String toString() {
+		String s = "";
+		
+		for (String key : items.keySet()) {
+			s += items.get(key).getName() + "\n";
+		}
+		
+		return s;
+	}
+}
+	
+
