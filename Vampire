@@ -1,0 +1,90 @@
+package com.bayviewglen.zork;
+
+import java.util.Scanner;
+
+public class Vampire {
+	String [] vampire = {"Vampire"};
+	private int vampireHealth = 70;
+	private int vampireDamage = 30;
+	private int damage;
+	private int yourHealth = 100;
+	private int numHealthPotions = 5 ;
+	private int healthPotionHealAmount = 30;
+	private String[] currentPlayAgain;
+	Scanner in = new Scanner (System.in);
+	
+	
+
+public void vampireAttacked(String Vampire) {
+	boolean runAway = false;
+	System.out.print("Hsssss, you see a black figure jump out and scratch at you, it lands on the ground and shows it's fangs. Prepare for battle.");
+	System.out.println(Vampire + " attacks you for " + vampireDamage + " damage.");
+	yourHealth -= vampireDamage;
+	
+	System.out.println("\nResponse A) Attack\nResponse B) Block\nResponse C) Drink Health Potion\nResponse D) Run Away");
+	
+	while (vampireHealth > 0 && yourHealth > 0) {
+	String r = in.nextLine();
+		//-----------------------------------------------------
+		if (r.equals("A")) {
+			vampireHealth -= damage;
+			System.out.println("You dealt " + damage + " damage" + "," + " The enemy's health is now" + vampireHealth + ".");
+			System.out.println("The enemy attacks you back again for " + vampireDamage + "damage");
+			yourHealth -= vampireDamage;
+		//-----------------------------------------------------	
+		} else if (r.equals("B")) {
+			System.out.println("You blocked his attack! Attack again? (Y/N)");
+			yourHealth += vampireDamage;
+			String response = in.nextLine();
+			
+			if (response.equals("Y")|| response.equals("y")){
+				vampireHealth -= damage;
+				System.out.println("You dealt " + damage + " damage" + "," + " The enemy's health is now" + vampireHealth + ".");	
+			}
+				System.out.println("Alright. Bad decisions were made... Vampires have no mercy! The enemy attacks you instead.");
+						yourHealth -= vampireDamage;
+			
+		//------------------------------------------------------	
+		} else if (r.equals("C") && numHealthPotions > 0) {
+				    yourHealth += healthPotionHealAmount;
+					numHealthPotions--;
+					System.out.println("\t> You drink a health potion, healing yourself for "+ healthPotionHealAmount + "." + "\n\t> You now have " + yourHealth + "health left."+ "\n\t> You have " + numHealthPotions + " health potions left.\n");
+				    } 
+					System.out.println("\t> You have no health potions left");
+		//------------------------------------------------------			
+		} else if (r.equals("D")) {
+			double run = Math.random();
+			if (run < 0.51) {
+				runAway = true;
+			}
+		} else
+			System.out.println(
+					"Not a valid Response... \nResponse A) Attack\nResponse B) Block\nResponse C)Drink Health Potion\nResponse D) Run Away");
+
+		if (runAway && vampireHealth > 0 && yourHealth > 0) {
+			double run = Math.random();
+			if (run < 0.51) {
+				System.out.println(Vampire + " steps infront of you and attacks you!");
+						yourHealth -= vampireDamage;				
+			} else {
+				System.out.println(Vampire + " attacks you but misses; you successfuly run away.");
+			}
+		}
+	}
+	public String playerDead() {
+		if (yourHealth <= 0) {
+			System.out.println("You have died, would you like to play again (Y/N)?");
+			String playAgain = in.nextLine();
+			
+			if (playAgain.equals("Y")){
+				Game g = new Game();
+				g.play();
+			} else if (playAgain.equals("N")){
+				System.exit(0);
+			}
+			
+		}
+		return null;
+		
+	}
+}
