@@ -1,0 +1,373 @@
+class Game {
+	private Parser parser;
+	private Room currentRoom;
+	private Inventory playerInventory;
+	// This is a MASTER object that contains all of the rooms and is easily
+	// accessible.
+	// The key will be the name of the room -> no spaces (Use all caps and
+	// underscore -> Great Room would have a key of GREAT_ROOM
+	// In a hashmap keys are case sensitive.
+	// masterRoomMap.get("GREAT_ROOM") will return the Room Object that is the
+	// Great Room (assuming you have one).
+	private HashMap<String, Room> masterRoomMap;
+
+	private void initRooms(String fileName) throws Exception {
+		masterRoomMap = new HashMap<String, Room>();
+		Scanner roomScanner;
+		try {
+			HashMap<String, HashMap<String, String>> exits = new HashMap<String, HashMap<String, String>>();
+			roomScanner = new Scanner(new File(fileName));
+			while (roomScanner.hasNext()) {
+				Room room = new Room();
+				// Read the Name
+				String roomName = roomScanner.nextLine();
+				room.setRoomName(roomName.split(":")[1].trim());
+				// Read the Description
+				String roomDescription = roomScanner.nextLine();
+				room.setDescription(roomDescription.split(":")[1].replaceAll("<br>", "\n").trim());
+				// Read the Exits
+				String roomExits = roomScanner.nextLine();
+				// An array of strings in the format E-RoomName
+				String[] rooms = roomExits.split(":")[1].split(",");
+				HashMap<String, String> temp = new HashMap<String, String>();
+				for (String s : rooms) {
+					temp.put(s.split("-")[0].trim(), s.split("-")[1]);
+				}
+
+				exits.put(roomName.substring(10).trim().toUpperCase().replaceAll(" ", "_"), temp);
+
+				// This puts the room we created (Without the exits in the
+				// masterMap)
+				masterRoomMap.put(roomName.toUpperCase().substring(10).trim().replaceAll(" ", "_"), room);
+
+				// Now we better set the exits.
+			}
+
+			for (String key : masterRoomMap.keySet()) {
+				Room roomTemp = masterRoomMap.get(key);
+				HashMap<String, String> tempExits = exits.get(key);
+				for (String s : tempExits.keySet()) {
+					// s = direction
+					// value is the room.
+
+					String roomName2 = tempExits.get(s.trim());
+					Room exitRoom = masterRoomMap.get(roomName2.toUpperCase().replaceAll(" ", "_"));
+					roomTemp.setExit(s.trim().charAt(0), exitRoom);
+
+				}
+
+			}
+
+			roomScanner.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the game and initialise its internal map.
+	 */
+	public Game() {
+		try {
+			initRooms("data/rooms.dat");
+			playerInventory = new Inventory();
+			currentRoom = masterRoomMap.get("LIVING_ROOM");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		parser = new Parser();
+	}
+
+	/**
+	 * Main play routine. Loops until end of play.
+	 */
+	public void play() {
+		printWelcome();
+		// Enter the main command loop. Here we repeatedly read commands and
+		// execute them until the game is over.
+
+		boolean finished = false;
+		while (!finished) {
+			Command command = parser.getCommand();
+			finished = processCommand(command);
+		}
+		System.out.println("Thank you for playing.  Good bye.");
+	}
+
+	/**
+	 * Print out the opening message for the player.
+	 */
+	private void printWelcome() {
+		System.out.println();
+		System.out.println("Welcome to Zork!");
+		System.out.println("Zork is a new, adventure game.");
+		System.out.println("Type 'help' if you need help.");
+		System.out.println();
+		System.out.println(currentRoom.longDescription());
+	}
+
+	/**
+	 * Given a command, process (that is: execute) the command. If this command ends
+	 * the game, true is returned, otherwise false is returned.
+	 */
+	private boolean processCommand(Command command) {
+		if (command.isUnknown()) {
+			System.out.println("I don't know what you mean...");
+			return false;
+		}
+		String commandWord = command.getCommandWord();
+		if (commandWord.equals("help"))
+			printHelp();
+		else if (commandWord.equals("drop")) {
+			if (command.hasSecondWord())
+				drop(command.getSecondWord());
+			else
+				System.out.println("drop what?");
+
+		} else if (commandWord.equals("Enter")) {
+			if (command.hasSecondWord())
+				enter(command.getSecondWord());
+
+		} else if (commandWord.equals("Exit")) {
+			if (command.hasSecondWord())
+				exit(command.getSecondWord());
+
+		} else if (commandWord.equals("Look")) {
+			if (command.hasSecondWord())
+				look(command.getSecondWord());
+			else
+				System.out.println("Look where?");
+
+		} else if (commandWord.equals("climb")) {
+			if (command.hasSecondWord())
+				climb(command.getSecondWord());
+			else
+				System.out.println("climb what?");
+
+		} else if (commandWord.equals("Jump")) {
+			if (command.hasSecondWord())
+				System.out.println("Wheeeeeeeeee");
+
+		} else if (commandWord.equals("open")) {
+			if (command.hasSecondWord())
+				open(command.getSecondWord());
+			else
+				System.out.println("Open what?");
+
+		} else if (commandWord.equals("swim")) {
+			if (command.hasSecondWord())
+				swim(command.getSecondWord());
+			else
+				System.out.println("where?");
+
+		} else if (commandWord.equals("carry")) {
+			if (command.hasSecondWord())
+				System.out.println("carried");
+
+		} else if (commandWord.equals("take")) {
+			if (command.hasSecondWord())
+				take(command.getSecondWord());
+			else
+				System.out.println("taken");
+
+		} else if (commandWord.equals("throw")) {
+			if (command.hasSecondWord())
+				read(command.getSecondWord());
+			else
+				System.out.println("throw what?");
+
+		} else if (commandWord.equals("give")) {
+			if (command.hasSecondWord())
+				read(command.getSecondWord());
+			else
+				System.out.println("give what?");
+
+		} else if (commandWord.equals("read")) {
+			if (command.hasSecondWord())
+				read(command.getSecondWord());
+			else
+				System.out.println("read what?");
+
+		} else if (commandWord.equals("attack")) {
+			if (command.hasSecondWord())
+				attack(command.getSecondWord());
+			else
+				System.out.println("what do you want to attack with?");
+
+		} else if (commandWord.equals("walk")) {
+			if (command.hasSecondWord())
+				walk(command.getSecondWord());
+			else
+				System.out.println("where do you want to walk?");
+
+		} else if (commandWord.equals("run")) {
+			if (command.hasSecondWord())
+				run(command.getSecondWord());
+			else
+				System.out.println("Where do you want to run?");
+
+		} else if (commandWord.equals("scream")) {
+			if (command.hasSecondWord())
+				System.out.println("AAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHH");
+		} else if (commandWord.equals("go")) {
+			// go(command.getSecondWord());
+			goRoom(command);
+
+		} else if (commandWord.equals("quit")) {
+			if (command.hasSecondWord())
+				System.out.println("Are you sure?");
+			else
+				return true; // signal that we want to quit
+		} else if (commandWord.equals("eat")) {
+			eat(command.getSecondWord());
+		} else {
+			System.out.println("eat what?");
+		}
+		return false;
+
+	}
+
+	private void swim(String secondWord) {
+		// TODO Auto-generated method stub
+
+	}
+
+	
+
+	private void take(String secondWord) {
+		if (secondWord.equalsIgnoreCase("sword")) {
+			if (currentRoom.getRoomInventory().hasItem(secondWord)) {
+				System.out.println("You have now taken" + secondWord);
+				playerInventory.addToInventory(new Item(secondWord, 30));
+				currentRoom.getRoomInventory().removeFromInventory(secondWord);
+			}
+		} else if (secondWord.equalsIgnoreCase("torch")) {
+			if (currentRoom.getRoomInventory().hasItem(secondWord)) {
+				System.out.println("You have now taken" + secondWord);
+				playerInventory.addToInventory(new Item(secondWord, 15));
+				currentRoom.getRoomInventory().removeFromInventory(secondWord);
+			}
+		} else
+			System.out.println("You can't take " + secondWord);
+
+	}
+
+	private void exit(String secondWord) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void enter(String secondWord) {
+		if(currentRoom.getRoomName().equals("Living Room")) {
+			if (secondWord.equals("tree")) {
+				System.out.println("You climb the Christmas Tree");
+						System.out.println ("There is  " + secondWord);
+					// if it can't be opened
+						System.out.println(secondWord + " cant be entered");
+				// if item does not exist
+				System.out.println("You dont have a " + secondWord);
+			}
+		}
+	}
+
+	private void eat(String secondWord) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void run(String secondWord) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void walk(String secondWord) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void attack(String secondWord) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void open(String secondWord) {
+		// if item exists
+		// if item can be opened
+		System.out.println("There is a ____ inside the " + secondWord);
+		// if it cant be opened
+		System.out.println(secondWord + " cant be opened");
+		// if item does not exist
+		System.out.println("You dont have a " + secondWord);
+
+	}
+
+	private void climb(String secondWord) {
+		if (currentRoom.getRoomName().equals("Living Room")) {
+			if (secondWord.equals("tree")) {
+				System.out.println("You climb the Christmas Tree");
+			}
+
+			else {
+				System.out.println("you cannot climb this object");
+			}
+
+		}
+
+	}
+
+	private void look(String secondWord) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void drop(String secondWord) {
+		if (playerInventory.hasItem(secondWord)) {
+			currentRoom.getRoomInventory().addToInventory(new Item(secondWord, 5));
+			System.out.println("You have now dropped" + secondWord);
+			playerInventory.removeFromInventory(secondWord);
+			System.out.println("You dropped the" + secondWord);
+		} else
+			System.out.println("You dont have a " + secondWord);
+
+	}
+
+	private void read(String secondWord) {
+
+		System.out.println("You read the" + secondWord);
+
+	}
+
+	// implementations of user commands:
+	/**
+	 * Print out some help information. Here we print some stupid, cryptic message
+	 * and a list of the command words.
+	 */
+	private void printHelp() {
+		System.out.println("You are lost. You wander");
+		System.out.println("around at a house.");
+		System.out.println();
+		System.out.println("Your command words are:");
+		parser.showCommands();
+	}
+
+	/**
+	 * Try to go to one direction. If there is an exit, enter the new room,
+	 * otherwise print an error message.
+	 */
+	private void goRoom(Command command) {
+		if (!command.hasSecondWord()) {
+			// if there is no second word, we don't know where to go...
+			System.out.println("Go where?");
+			return;
+		}
+		String direction = command.getSecondWord();
+		// Try to leave current room.
+		Room nextRoom = currentRoom.nextRoom(direction);
+		if (nextRoom == null)
+			System.out.println("There is no door!");
+		else {
+			currentRoom = nextRoom;
+			System.out.println(currentRoom.longDescription());
+		}
+	}
