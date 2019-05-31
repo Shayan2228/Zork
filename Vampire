@@ -1,0 +1,21 @@
+package com.bayviewglen.zork;
+
+import java.util.Scanner;
+
+public class Vampire extends Enemy{
+
+	private static final String VAMPIRE_DIALOGUE = "Hsssss, you see a black figure jump out and scratch at you, it lands on the ground and shows it's fangs" ;
+	
+	private static final int START_VAMPIRE_DAMAGE = 30;
+	private static final int START_VAMPIRE_HEALTH = 70;
+
+	public Vampire(){
+		super("Vampire", START_VAMPIRE_DAMAGE, START_VAMPIRE_HEALTH);
+	}
+	
+	public boolean start() {
+		System.out.println(VAMPIRE_DIALOGUE);
+		return true;
+	}
+
+}
