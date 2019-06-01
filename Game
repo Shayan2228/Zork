@@ -329,22 +329,22 @@ class Game {
 	}
 
 	private void take(String secondWord) {
+		private void take(String secondWord) {
 		if (secondWord.equalsIgnoreCase("sword")) {
 			if (currentRoom.getRoomInventory().hasItem(secondWord)) {
-				System.out.println("You have now taken the " + secondWord);
+				System.out.println("You have now taken" + secondWord);
 				playerInventory.addToInventory(new Item(secondWord, 30));
 				currentRoom.getRoomInventory().removeFromInventory(secondWord);
 			}
-		} else if (secondWord.equalsIgnoreCase("key")) {
+		} else if (secondWord.equalsIgnoreCase("torch")) {
 			if (currentRoom.getRoomInventory().hasItem(secondWord)) {
-				System.out.println("You have now taken then " + secondWord);
-				playerInventory.addToInventory(new Item(secondWord, 5));
+				System.out.println("You have now taken" + secondWord);
+				playerInventory.addToInventory(new Item(secondWord, 15));
 				currentRoom.getRoomInventory().removeFromInventory(secondWord);
 			}
 		} else
 			System.out.println("You can't take " + secondWord);
-
-	}
+				}
 
 	private void exit(String secondWord) {
 		// TODO Auto-generated method stub
