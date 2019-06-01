@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * Class Game - the main class of the "Zork" game.
  *
- * Author: Michael Kolling Version: 1.1 Date: March 2000
+ * 
  * 
  * This class is the main class of the "Zork" application. Zork is a very
  * simple, text based adventure game. Users can walk around some scenery. That's
@@ -98,25 +98,26 @@ class Game {
 			initItems();
 			initEnemies();
 
-			if (currentRoom.getGuard() != null) { // if the room has a guard
-
-				Guards g = new Guards(1); // guard 1,2,3,4 dialogue, checking if the guards will attack you
-				boolean isAttacked = g.start(1);
-				Fighting f = new Fighting(false, true, "Guards", isAttacked);
-				g = new Guards(2);
-				isAttacked = g.start(2);
-				Fighting i = new Fighting(false, true, "Guards", isAttacked);
-				g = new Guards(3);
-				isAttacked = g.start(3);
-				Fighting j = new Fighting(false, true, "Guards", isAttacked);
-				g = new Guards(4);
-				isAttacked = g.start(4);
-				Fighting w = new Fighting(false, true, "Guards", isAttacked);
-
-			} else if (currentRoom.getVampire() != null) { // if the room has a vampire
-				// Vampire Fight
-				// Fighting v = new Fighting(false, true, "Vampire", isAttacked);
-			}
+//			if (currentRoom.getEnemy() != null) { // if the room has a guard
+//
+//				Guards g = new Guards(1); // guard 1,2,3,4 dialogue, checking if the guards will attack you
+//				boolean isAttacked = g.start(1);
+//				Fighting f = new Fighting(false, true, "Guards", isAttacked);
+//				g = new Guards(2);
+//				isAttacked = g.start(2);
+//				Fighting i = new Fighting(false, true, "Guards", isAttacked);
+//				g = new Guards(3);
+//				isAttacked = g.start(3);
+//				Fighting j = new Fighting(false, true, "Guards", isAttacked);
+//				g = new Guards(4);
+//				isAttacked = g.start(4);
+//				Fighting w = new Fighting(false, true, "Guards", isAttacked);
+//
+//			} else if (currentRoom.getVampire() != null) { // if the room has a vampire
+//				Fighting v = new Fighting(false, true, "Vampire", isAttacked);
+//				 //Vampire Fight
+//				 //Fighting v = new Fighting(true, false, "Vampire", );
+//			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -140,18 +141,18 @@ class Game {
 	private void initEnemies() {
 		// guards
 		Room library = masterRoomMap.get("LIBRARY");
-		library.setGuard(new Guards(1));
+		library.setEnemy(new Guards(1));
 		Room library2 = masterRoomMap.get("LIBRARY_2");
-		library2.setGuard(new Guards(2));
+		library2.setEnemy(new Guards(2));
 		Room cellar = masterRoomMap.get("WINE_CELLAR");
-		cellar.setGuard(new Guards(3));
+		cellar.setEnemy(new Guards(3));
 		Room porch = masterRoomMap.get("FRONT_PORCH");
-		porch.setGuard(new Guards(4));
+		porch.setEnemy(new Guards(4));
 		// ------------------------------------------
 		// vampires
 //	Room bedroom = masterRoomMap.get("BEDROOM");
-//	bedroom.setVampire(new Fighting (true, false, "Vampire", true));
-//NEED TO ADD VAMPIRES; CANT UNTIL FIGHTING CLASS IS FIXED
+//	bedroom.setVampire(new Fighting (parameters that should be taken));
+
 	}
 
 	/**
@@ -164,6 +165,12 @@ class Game {
 
 		boolean finished = false;
 		while (!finished) {
+			if(currentRoom.getEnemy() != null) {
+				Enemy e = currentRoom.getEnemy();
+				boolean isAttacked = e.start();
+				Fighting f = new Fighting(playerInventory.hasItem("Sword"), playerInventory.hasItem("Fist"), e, isAttacked);
+			}
+			
 			Command command = parser.getCommand();
 			finished = processCommand(command);
 		}
